@@ -86,8 +86,6 @@ bindsym $mod+Shift+0 move container to $x
 
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
-bindsym $mod+Shift+e exec i3-msg exit
-bindsym $mod+Shift+h exec --no-startup-id "i3lock-fancy ; systemctl hibernate"
 
 bindsym $mod+g gaps inner current plus 5
 bindsym $mod+shift+g gaps inner current minus 5
@@ -102,6 +100,20 @@ bindsym $mod+m exec $term -e ranger
 
 bindsym $mod+p exec $term -e cmus
 
+set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
+mode "$mode_system" {
+     bindsym l exec --no-startup-id i3lock-fancy, mode "default"
+     bindsym e exec --no-startup-id systemctl exit, mode "default"
+     bindsym s exec --no-startup-id i3lock-fancy; systemctl suspend, mode "default"
+     bindsym h exec --no-startup-id i3lock-fancy; systemctl hibernate, mode "default"
+     bindsym r exec --no-startup-id systemctl reboot, mode "default"
+     bindsym Shift+s exec --no-startup-id systemctl poweroff, mode "default"
+
+     # back to normal: Enter or Escape
+     bindsym Return mode "default"
+     bindsym Escape mode "default"
+}
+ bindsym $mod+Delete mode "$mode_system"
 
 bindsym XF86AudioRaiseVolume exec amixer -c 1 sset Master 5%+ unmute
 bindsym XF86AudioLowerVolume exec amixer -c 1 sset Master 5%- unmute
@@ -186,15 +198,15 @@ bar{
      
         }
 
-       # status_command i3status
         status_command i3blocks
-#	status_command ~/.config/bumblebee-status/bumblebee-status -m memory traffic  publicip  nic  battery  date time amixer brightness -p memory.format="{used}" traffic.states="^down"  time.format="%I:%M %P" date.format="%a, %b %d %Y" nic.states="^down" -t gruvbox-powerline
 }
 
 gaps inner 10
 gaps outer 20
 
 #Startup programs
+exec_always --no-startup-id xset s off
+exec_always --no-startup-id xset -dpms
 exec_always compton --config ~/.config/compton.conf 
 exec_always --no-startup-id nm-applet
 #exec_always --no-startup-id telegram-desktop
