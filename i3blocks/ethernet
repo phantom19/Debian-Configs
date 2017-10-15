@@ -1,0 +1,7 @@
+#!/bin/bash
+
+if [[ $(ip -o -4 addr show dev elo1) == "" ]]; then
+    echo "elo1 down" 
+else
+    ip -o -4 addr show dev elo1|python -c "import sys;print sys.stdin.read().split()[3].split('/')[0]"
+fi

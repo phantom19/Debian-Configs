@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+#[ "${BLOCK_BUTTON}" -eq "1" ] && nm-connect &
+#[ "${BLOCK_BUTTON}" -eq "2" ] && nm-disconnect &
+#[ "${BLOCK_BUTTON}" -eq "3" ] && nm-wifi &
+
+#function connection_of_type() {
+#  nmcli -t -f type,name connection show --active \
+#    | grep $1 \
+#    | awk -F: '{print $2}'
+#}
+
+#WIRELESS="$(connection_of_type wireless)"
+#VPN="$(connection_of_type vpn)"
+#[ -n "$WIRELESS" ] \
+#  && echo -n "   ${WIRELESS} " \
+#  || echo -n "   ---"
+#[ -n "$VPN" ] \
+#  && echo -n "   ${VPN} "
+#echo
+
+
+if [[ $(iwgetid -r) == "" ]]; then
+    echo "WifiDown"
+else
+    echo \"$(iwgetid -r)\"  $(ip -o -4 addr show dev wlan0 |python -c "import sys;print sys.stdin.read().split()[3].split('/')[0]")
+fi
+
+case $BLOCK_BUTTON in
+    1)
+        #i3-sensible-terminal &
+        ;;
+    2)
+        #$pulsectl mi
+        ;;
+    3)
+        ;;
+esac

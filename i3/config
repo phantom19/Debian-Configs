@@ -1,0 +1,204 @@
+set $mod Mod4
+
+set $term urxvt
+
+font pango: Ubuntu 10
+
+floating_modifier $mod
+
+focus_follows_mouse no
+
+# Keyboard Shortcuts
+
+bindsym $mod+Return exec $term
+bindsym $mod+q kill
+bindsym $mod+Shift+q kill
+bindsym $mod+d exec dmenu_run
+
+bindsym $mod+j focus left
+bindsym $mod+k focus down
+bindsym $mod+l focus up
+bindsym $mod+semicolon focus right
+
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+bindsym $mod+Shift+j move left
+bindsym $mod+Shift+k move down
+bindsym $mod+Shift+l move up
+bindsym $mod+Shift+semicolon move right
+
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+bindsym $mod+h split h
+
+bindsym $mod+v split v
+
+bindsym $mod+f fullscreen toggle
+
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+bindsym $mod+Shift+space floating toggle
+
+bindsym $mod+space focus mode_toggle
+
+bindsym $mod+a focus parent
+
+set $i    workspace 1:
+set $ii   workspace 2:
+set $iii  workspace 3:
+set $iv   workspace 4:
+set $v    workspace 5:
+set $vi   workspace 6:
+set $vii  workspace 7:
+set $viii workspace 8:
+set $ix   workspace 9:
+set $x    workspace 10:
+
+bindsym $mod+1 $i
+bindsym $mod+2 $ii
+bindsym $mod+3 $iii
+bindsym $mod+4 $iv
+bindsym $mod+5 $v
+bindsym $mod+6 $vi
+bindsym $mod+7 $vii
+bindsym $mod+8 $viii
+bindsym $mod+9 $ix
+bindsym $mod+0 $x
+
+bindsym $mod+Shift+1 move container to $i
+bindsym $mod+Shift+2 move container to $ii
+bindsym $mod+Shift+3 move container to $iii
+bindsym $mod+Shift+4 move container to $iv
+bindsym $mod+Shift+5 move container to $v
+bindsym $mod+Shift+6 move container to $vi
+bindsym $mod+Shift+7 move container to $vii
+bindsym $mod+Shift+8 move container to $viii
+bindsym $mod+Shift+9 move container to $ix
+bindsym $mod+Shift+0 move container to $x
+
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+r restart
+bindsym $mod+Shift+e exec i3-msg exit
+bindsym $mod+Shift+h exec --no-startup-id "i3lock-fancy ; systemctl hibernate"
+
+bindsym $mod+g gaps inner current plus 5
+bindsym $mod+shift+g gaps inner current minus 5
+
+bindsym $mod+z gaps outer current plus 5
+bindsym $mod+shift+z gaps outer current minus 5
+
+bindsym $mod+c exec chromium
+bindsym $mod+i exec chromium --incognito
+
+bindsym $mod+m exec $term -e ranger
+
+bindsym $mod+p exec $term -e cmus
+
+
+bindsym XF86AudioRaiseVolume exec amixer -c 1 sset Master 5%+ unmute
+bindsym XF86AudioLowerVolume exec amixer -c 1 sset Master 5%- unmute
+bindsym XF86AudioMute exec amixer -c 1 sset Master toggle  | grep [on] && amixer -c 1 sset Headphone unmute && amixer -c 1 sset Speaker unmute
+bindsym XF86MonBrightnessUp exec xbacklight -inc 10 # increase screen brightness
+bindsym XF86MonBrightnessDown exec xbacklight -dec 10 # decrease screen brightness
+bindsym XF86AudioPause exec cmus-remote --pause
+bindsym XF86AudioNext exec cmus-remote --next
+bindsym XF86AudioPrev exec cmus-remote --prev
+
+bindsym $mod+Ctrl+l exec i3lock-fancy
+
+bindsym Print exec scrot 'Screenshot%Y%m%d-%I%M%S.png' -e 'mv $f ~/Pictures/'
+
+#Windows Placements
+
+for_window [class="TelegramDesktop"] move container to $iv
+
+for_window [class="Code"] move container to $iii
+
+for_window [class="mpv"] move container to $ii, focus
+
+for_window [class="mpv"] floating enable
+
+for_window [class="^.*"] border pixel 0
+
+mode "resize" {
+        bindsym j resize shrink width 10 px or 10 ppt
+        bindsym k resize grow height 10 px or 10 ppt
+        bindsym l resize shrink height 10 px or 10 ppt
+        bindsym semicolon resize grow width 10 px or 10 ppt
+
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+set $base02           #073642
+set $base01           #586e75
+set $base00           #657b83
+set $base0            #839496
+set $base1            #93a1a1
+set $base2            #eee8d5
+set $base3            #fdf6e3
+set $yellow           #b58900
+set $orange           #cb4b16
+set $red              #cc0009
+set $magenta          #d33682
+set $violet           #6c71c4
+set $blue             #268bd2
+set $cyan             #2aa198
+set $green            #859900
+set $custom           #1c5766
+set $black            #000000
+set $white            #ffffff
+set $gray			  #808080
+
+# class                 border   backgr.  text     indicator
+client.focused          $red     $red     $white   $red
+client.focused_inactive $black   $black   $white   $black
+client.unfocused        $black   $black   $white   $black
+client.urgent           $blue    $blue    $white   $blue
+
+bar{
+        colors {
+         # bar colours
+         background $black
+         statusline $blue
+         separator  $red
+
+         # class            border   backgr.  text
+         inactive_workspace $black   $black   $gray
+         active_workspace   $black   $black   $white
+         focused_workspace  $black  $black    $white
+         urgent_workspace   $black    $black  $red
+     
+        }
+
+       # status_command i3status
+        status_command i3blocks
+#	status_command ~/.config/bumblebee-status/bumblebee-status -m memory traffic  publicip  nic  battery  date time amixer brightness -p memory.format="{used}" traffic.states="^down"  time.format="%I:%M %P" date.format="%a, %b %d %Y" nic.states="^down" -t gruvbox-powerline
+}
+
+gaps inner 10
+gaps outer 20
+
+#Startup programs
+exec_always compton --config ~/.config/compton.conf 
+exec_always --no-startup-id nm-applet
+#exec_always --no-startup-id telegram-desktop
+exec_always --no-startup-id feh --bg-fill /home/vysakh/Pictures/BatmanGlide.jpg
+#exec /bin/bash ~/.conky/conky-startup.sh
+exec_always --no-startup-id udiskie -N
+exec_always --no-startup-id parcellite
